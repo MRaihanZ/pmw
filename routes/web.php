@@ -1,43 +1,30 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Models\Transaction;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
 Route::get('/', function () {
-    return view('pages.index');
+    return view('welcome');
 });
 
-Route::get('/tambah-data', function () {
-    $transaction = new Transaction;
-    $transaction->amount = 243524;
-    $transaction->category = 'gaji';
-    $transaction->date = '2027-01-11';
-    $transaction->type = 'expense';
-    $transaction->description = 'testing 2 tambah data';
-    $transaction->save();
-
-    return "berhasil tambah : " . $transaction;
-});
-
-Route::get('/edit-data', function () {
-    $transaction = Transaction::find(11);
-    $transaction->amount = 4090;
-    $transaction->category = 'lorem';
-    $transaction->save();
-
-    return "berhasil edit : " . $transaction;
-});
-
-Route::get('/hapus-data', function () {
-    $transaction = Transaction::find(12)->delete();
-
-    return "berhasil hapus" . $transaction . " data";
-});
-
-Route::get('/test', TestController::class . '@index');
-
-
-Route::get('/call-transaction', function () {
-    return Transaction::findOrFail(1);
-});
+Route::get('/home', HomeController::class.'@index')->name('home');
+Route::get('/income', IncomeController::class.'@index')->name('income.index');
+Route::get('/income/{id}/edit', IncomeController::class.'@edit')->name('income.edit');
+Route::get('/expense', ExpenseController::class.'@index')->name('expense.index');
+Route::get('/expense/{id}/edit', ExpenseController::class.'@edit')->name('income.edit');
+Route::get('/transaction', TransactionController::class.'@index')->name('transaction.index');
