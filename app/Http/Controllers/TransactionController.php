@@ -9,7 +9,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $data['transactions'] = Transaction::get();
+        $data['transactions'] = Transaction::orderBy('id', 'desc')->get();
         $data['total_income'] = Transaction::where('type', 'income')->sum('amount');
         $data['total_expense'] = Transaction::where('type', 'expense')->sum('amount');
         return view('transaction.index', $data);
