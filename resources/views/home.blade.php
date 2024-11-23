@@ -51,10 +51,10 @@
                     </div>
                     <div>
                         @if ($transaction->type == 'income')
-                            <span class="text-md font-bold text-green-500"> Rp
+                            <span class="text-md font-bold text-green-500">+ Rp
                                 {{ number_format($transaction->amount, '2', ',', '.') }}</span>
                         @else
-                            <span class="text-md font-bold text-red-500"> Rp
+                            <span class="text-md font-bold text-red-500">- Rp
                                 {{ number_format($transaction->amount, '2', ',', '.') }}</span>
                         @endif
                     </div>
