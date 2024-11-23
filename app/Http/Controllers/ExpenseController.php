@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -11,7 +12,21 @@ class ExpenseController extends Controller
         return view('expense.index');
     }
 
-    public function edit($id){
-        return view('expense.edit');
+    public function edit($id)
+    {
+        $data['transaction'] = Transaction::find($id);
+
+        return view('expense.edit', $data);
+    }
+    public function update(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->update($request->all());
+        return redirect()->route('home');
+    }
+    public function store(Request $request)
+    {
+        Transaction::create($request->all());
+        return redirect()->route('home');
     }
 }

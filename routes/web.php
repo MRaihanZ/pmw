@@ -19,12 +19,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
-Route::get('/home', HomeController::class.'@index')->name('home');
-Route::get('/income', IncomeController::class.'@index')->name('income.index');
-Route::get('/income/{id}/edit', IncomeController::class.'@edit')->name('income.edit');
-Route::get('/expense', ExpenseController::class.'@index')->name('expense.index');
-Route::get('/expense/{id}/edit', ExpenseController::class.'@edit')->name('income.edit');
-Route::get('/transaction', TransactionController::class.'@index')->name('transaction.index');
+Route::get('/home', HomeController::class . '@index')->name('home');
+Route::controller(IncomeController::class)->group(function () {
+    Route::get('/income', 'index')->name('income.index');
+    Route::post('/income', 'store')->name('income.index');
+    Route::get('/income/{id}/edit', 'edit')->name('income.edit');
+    Route::put('/income/{id}/edit', 'update')->name('income.update');
+});
+
+Route::controller(ExpenseController::class)->group(function () {
+    Route::get('/expense', 'index')->name('expense.index');
+    Route::post('/expense', 'store')->name('expense.index');
+    Route::get('/expense/{id}/edit', 'edit')->name('income.edit');
+    Route::put('/expense/{id}/edit', 'update')->name('income.update');
+});
+
+Route::controller(TransactionController::class)->group(function () {
+    Route::get('/transaction', 'index')->name('transaction.index');
+    Route::get('/transaction/{id}/delete', 'delete')->name('transaction.delete');
+});
